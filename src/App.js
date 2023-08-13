@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { Route, Routes } from "react-router-dom"
-import { Main, Login, Register, Navbar } from './components'
+import { Main, Login, Register, Navbar, ArticleDetail } from './components'
 import { getItem } from "./helpers/persistance-storage"
 import AuthService from "./service/auth"
 import { signUserSuccess } from "./slice/auth"
@@ -25,7 +25,6 @@ const App = () => {
     try {
       const response = await ArticleService.getArticles()
       dispatch(getArticlesSuccess(response.articles))
-      console.log(response)
     } catch (error) {
       console.log(error)
     }
@@ -40,12 +39,13 @@ const App = () => {
   }, [])
 
   return (
-    <div>
+    <div className="container">
       <Navbar />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/article/:slug" element={<ArticleDetail />} />
       </Routes>
     </div>
   )
